@@ -1,0 +1,15 @@
+.label {
+  display: flex;
+  flex-direction: column;
+}
+.input {
+  margin-top: 5px;
+  width: 220px;
+  outline: none;
+  height: 15px;
+  padding: 2.5px;
+}
+.input:hover,
+.input:focus {
+  border-color: #604af0f5;
+}
