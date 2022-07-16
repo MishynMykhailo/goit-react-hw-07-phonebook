@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import s from '../ContactItem/ContactItem.module.css';
-const ContactItem = ({ name, number, id, onDeleteContacts }) => {
+const ContactItem = ({ name, phone, id, onDeleteContacts }) => {
   return (
     <li className={s.li}>
       <div className={s.divItemContainer}>
-        {name}: {number}{' '}
+        {name}: {phone}{' '}
         <button
           type="button"
           className={s.button}
@@ -20,7 +20,7 @@ const ContactItem = ({ name, number, id, onDeleteContacts }) => {
 ContactItem.propTypes = {
   id: PropTypes.any,
   name: PropTypes.string,
-  number: PropTypes.string,
+  phone: PropTypes.string,
   onDeleteContacts: PropTypes.func,
 };
 

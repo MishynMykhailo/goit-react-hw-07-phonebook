@@ -3,10 +3,10 @@ import { useState } from 'react';
 import s from '../ContactForm/ContactForm.module.css';
 import { getItemsValueState } from 'redux/contacts/contacts-selectors';
 import { useDispatch, useSelector } from 'react-redux';
-import * as actions from '../../redux/contacts/contacts-actions';
+import * as operations from '../../redux/contacts/contacts-operations';
 export const ContactForm = () => {
   const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+  const [phone, setPhone] = useState('');
   const contacts = useSelector(getItemsValueState);
   const dispatch = useDispatch();
 
@@ -16,32 +16,33 @@ export const ContactForm = () => {
       case 'name':
         setName(value);
         break;
-      case 'number':
-        setNumber(value);
+      case 'phone':
+        setPhone(value);
         break;
       default:
         return;
     }
   };
 
-  const addContacts = ({ name, number }) => {
+  const addContacts = ({ name, phone }) => {
     const normalizedName = name.toLowerCase();
     if (contacts.find(({ name }) => name.toLowerCase() === normalizedName)) {
       alert(`${name} is already in contacts`);
     } else {
-      return dispatch(actions.addContact({ name, number }));
+      console.log(name, phone);
+      return dispatch(operations.addContact({ name, phone }));
     }
   };
 
   const handlerSumbit = e => {
     e.preventDefault();
     reset();
-    return addContacts({ name, number });
+    return addContacts({ name, phone });
   };
 
   const reset = () => {
     setName('');
-    setNumber('');
+    setPhone('');
   };
 
   return (
@@ -60,13 +61,13 @@ export const ContactForm = () => {
         />
       </label>
       <label className={s.label}>
-        Number
+        Phone
         <input
           className={s.input}
           type="tel"
-          name="number"
+          name="phone"
           onChange={handlerChange}
-          value={number}
+          value={phone}
         />
       </label>
       <button className={s.button} type="submit">
