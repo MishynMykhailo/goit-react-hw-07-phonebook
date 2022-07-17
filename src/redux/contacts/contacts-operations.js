@@ -2,30 +2,34 @@ import axios from 'axios';
 import * as actions from './contacts-actions';
 axios.defaults.baseURL = 'https://62d25304d4eb6c69e7e95a0f.mockapi.io/';
 
-export const fetchContact = () => dispatch => {
+export const fetchContact = () => async dispatch => {
   dispatch(actions.fetchContactRequest());
-  axios
-    .get('/contacts')
-    .then(({ data }) => {
-      dispatch(actions.fetchContactSuccess(data));
-    })
-    .catch(error => dispatch(actions.fetchContactError(error)));
+
+  try {
+    const { data } = await axios.get('/contacts');
+    dispatch(actions.fetchContactSuccess(data));
+  } catch (error) {
+    dispatch(actions.fetchContactError(error));
+  }
 };
 
-export const addContact = text => dispatch => {
+export const addContact = text => async dispatch => {
   dispatch(actions.addContactRequest());
 
-  axios
-    .post('/contacts', text)
-    .then(({ data }) => {
-      dispatch(actions.addContactSuccess(data));
-    })
-    .catch(error => dispatch(actions.addContactError(error)));
+  try {
+    const { data } = await axios.post('/contacts', text);
+    dispatch(actions.addContactSuccess(data));
+  } catch (error) {
+    dispatch(actions.addContactError(error));
+  }
 };
-export const deleteContact = id => dispatch => {
+export const deleteContact = id => async dispatch => {
   dispatch(actions.deleteContactRequest());
-  axios
-    .delete(`/contacts/${id}`)
-    .then(() => dispatch(actions.deleteContactSuccess(id)))
-    .catch(error => dispatch(actions.deleteContactError(error)));
+
+  try {
+    await axios.delete(`/contacts/${id}`);
+    dispatch(actions.deleteContactSuccess(id));
+  } catch (error) {
+    dispatch(actions.deleteContactError(error));
+  }
 };
